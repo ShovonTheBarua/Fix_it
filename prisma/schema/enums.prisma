@@ -1,0 +1,27 @@
+enum ActiveStatus {
+    ACTIVE 
+    BLOCKED
+}
+
+enum Role {
+   CUSTOMER
+   TECHNICIAN
+   ADMIN
+}
+
+enum BookingStatus {
+    REQUESTED
+    ACCEPTED
+    DECLINED
+}
+
+enum PaymentMethod {
+    SSLCommerz
+    Stripe
+}
+
+enum PaymentStatus{
+    PENDING
+    COMPLETED
+    FAILED
+}

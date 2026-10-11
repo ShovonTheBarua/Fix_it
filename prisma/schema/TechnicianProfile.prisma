@@ -1,0 +1,16 @@
+model TechnicianProfile{
+    id String @id @default(uuid())
+    skills String @db.VarChar(255)
+    pricing Int 
+    availability String 
+    experience Int
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt()
+
+    userId String @unique
+    user User @relation(fields: [userId], references: [id])
+    services Service[]
+    bookings Booking[]
+ 
+    @@map("technician_Profiles")
+}
