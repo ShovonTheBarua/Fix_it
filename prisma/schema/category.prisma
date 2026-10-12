@@ -6,4 +6,6 @@ model Category{
     updatedAt DateTime
 
     service Service[]
+
+    @@map("categories")
 }
