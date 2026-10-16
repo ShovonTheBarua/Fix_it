@@ -9,6 +9,7 @@ import { sendResponse } from "../utils/sendResponse";
 import jwt from "jsonwebtoken";
 import { CLIENT_RENEG_WINDOW } from "node:tls";
 import { jwtUtils } from "../utils/jwt";
+import { stdin } from "node:process";
 
 // const createUser = async (req: Request, res: Response) => {
 //   try {
@@ -61,18 +62,7 @@ const registerUser = catchAsync(
 
 const getMyProfile = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { accessToken } = req.cookies;
-    console.log(accessToken);
-
-    const verifiedToken = jwtUtils.verifyToken(
-      accessToken,
-      config.jwt_access_secret,
-    );
-
-    if (typeof verifiedToken === "string") {
-      throw new Error(verifiedToken);
-    }
-    const user = await userService.getMyProfileFromDB(verifiedToken.id);
+    const user = await userService.getMyProfileFromDB(req.user?.id as string);
 
     sendResponse(res, {
       success: true,
