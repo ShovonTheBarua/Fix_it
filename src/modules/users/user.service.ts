@@ -3,8 +3,6 @@ import { prisma } from "../../lib/prisma";
 import config from "../../config";
 import type { RegisterUserPayload } from "./user.interface";
 
-
-
 const registerUserIntoDB = async (payload: RegisterUserPayload) => {
   const { name, email, password } = payload;
   const isUserExist = await prisma.user.findUnique({
@@ -40,6 +38,18 @@ const registerUserIntoDB = async (payload: RegisterUserPayload) => {
   return user;
 };
 
+const getMyProfileFromDB = async (userId: string) => {
+  const user = await prisma.user.findUniqueOrThrow({
+    where: { id: userId },
+    omit: {
+      password: true,
+    },
+  });
+
+  return user;
+};
+
 export const userService = {
   registerUserIntoDB,
+  getMyProfileFromDB,
 };
