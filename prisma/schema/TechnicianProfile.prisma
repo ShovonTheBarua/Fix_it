@@ -1,7 +1,7 @@
 model TechnicianProfile{
     id String @id @default(uuid())
-    skills String @db.VarChar(255)
-    pricing Int 
+    skills Json
+    pricing String 
     availability String 
     experience Int
     createdAt DateTime @default(now())

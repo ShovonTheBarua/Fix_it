@@ -44,7 +44,7 @@ export const auth = (...requiredRoles: Role[]) => {
     });
 
     if (!user) {
-      throw new Error("User not found. Please lo in again");
+      throw new Error("User not found. Please login again");
     }
 
     if (user.activeStatus === "BLOCKED") {
