@@ -1,6 +1,6 @@
 model TechnicianAvailability{
     id String @id @default(uuid())
-    date DateTime @db.Date
+    date String
     startTime String 
     endTime String 
     isBooked Boolean @default(false)
@@ -11,5 +11,5 @@ model TechnicianAvailability{
     technicianId String
     technician TechnicianProfile @relation(fields: [technicianId], references: [id], onDelete: Cascade)
 
-@@map("technicianProfile")
+    @@map("technician_availability")
 }

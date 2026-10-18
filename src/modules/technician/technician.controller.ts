@@ -24,7 +24,6 @@ const createTechnicianProfile = catchAsync(
 
 const updateTechnicianProfile = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    
     const payload = req.body;
     const result = await technicianService.updateTechnicianProfileDB(
       payload,
@@ -40,7 +39,46 @@ const updateTechnicianProfile = catchAsync(
   },
 );
 
+const createAvailabilitySlot = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const payload = req.body;
+    const result = await technicianService.createAvailabilitySlotDB(
+      payload,
+      req.user?.id as string,
+    );
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.CREATED,
+      message: "availability slot created",
+      data: result,
+    });
+  },
+);
+
+const updateAvailabilitySlot = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { slotId } = req.params;
+    const payload = req.body;
+
+    const result = await technicianService.updateAvailabilitySlot(
+      payload,
+      req.user?.id as string,
+      slotId as string,
+    );
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.CREATED,
+      message: "availability slot created",
+      data: result,
+    });
+  },
+);
+
 export const technicianController = {
   createTechnicianProfile,
   updateTechnicianProfile,
+  createAvailabilitySlot,
+  updateAvailabilitySlot,
 };

@@ -16,4 +16,16 @@ router.put(
   technicianController.updateTechnicianProfile,
 );
 
+router.post(
+  "/availability",
+  auth(Role.ADMIN, Role.TECHNICIAN),
+  technicianController.createAvailabilitySlot,
+);
+
+router.put(
+  "/availability/:slotId",
+  auth(Role.ADMIN, Role.TECHNICIAN),
+  technicianController.updateAvailabilitySlot,
+);
+
 export const technicianRouter = router;

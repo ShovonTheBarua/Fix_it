@@ -1,11 +1,11 @@
 import { prisma } from "../../lib/prisma";
-import type { TechnicianPayload } from "./technician.interface";
+import type { Slot, TechnicianPayload } from "./technician.interface";
 
 const createTechnicianProfileDB = async (
   payload: TechnicianPayload,
   userId: string,
 ) => {
-  const { skills, pricing, availability, experience } = payload;
+  const { skills, pricing, experience } = payload;
 
   const isTechnicianExist = await prisma.user.findUniqueOrThrow({
     where: { id: userId },
@@ -16,7 +16,6 @@ const createTechnicianProfileDB = async (
       userId,
       skills,
       pricing,
-      availability,
       experience,
     },
   });
@@ -28,7 +27,7 @@ const updateTechnicianProfileDB = async (
   payload: TechnicianPayload,
   userId: string,
 ) => {
-  const { skills, pricing, availability, experience } = payload;
+  const { skills, pricing, experience } = payload;
   console.log(userId, payload);
 
   const result = await prisma.technicianProfile.update({
@@ -36,9 +35,68 @@ const updateTechnicianProfileDB = async (
     data: {
       skills,
       pricing,
-      availability,
       experience,
     },
+  });
+
+  return result;
+};
+
+const createAvailabilitySlotDB = async (payload: Slot, userId: string) => {
+  const { date, startTime, endTime } = payload;
+
+  const technicianProf = await prisma.technicianProfile.findUnique({
+    where: { userId },
+  });
+
+  if (!technicianProf) {
+    throw new Error("you don't have technician profile");
+  }
+
+  const technicianId = technicianProf.id;
+
+  const result = await prisma.technicianAvailability.create({
+    data: {
+      technicianId,
+      date,
+      startTime,
+      endTime,
+    },
+  });
+
+  return result;
+};
+
+const updateAvailabilitySlot = async (
+  payload: Slot,
+  userId: string,
+  slotId: string,
+) => {
+  const technicianProf = await prisma.technicianProfile.findUnique({
+    where: { userId },
+  });
+
+  if (!technicianProf) {
+    throw new Error("you don't have technician profile");
+  }
+  const technicianId = technicianProf.id;
+
+  const existingSlot = await prisma.technicianAvailability.findFirst({
+    where: {
+      id: slotId,
+      technicianId,
+    },
+  });
+
+  if (!existingSlot) {
+    throw new Error("Availability slot not found");
+  }
+
+  const result = await prisma.technicianAvailability.update({
+    where: {
+      id: slotId,
+    },
+    data: payload,
   });
 
   return result;
@@ -47,4 +105,6 @@ const updateTechnicianProfileDB = async (
 export const technicianService = {
   createTechnicianProfileDB,
   updateTechnicianProfileDB,
+  createAvailabilitySlotDB,
+  updateAvailabilitySlot,
 };

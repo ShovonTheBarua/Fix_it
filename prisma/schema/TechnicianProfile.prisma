@@ -2,7 +2,6 @@ model TechnicianProfile{
     id String @id @default(uuid())
     skills Json
     pricing String 
-    availability String 
     experience Int
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt()
