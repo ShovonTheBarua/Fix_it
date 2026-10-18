@@ -1,4 +1,4 @@
-export interface technicianPayload {
+export interface TechnicianPayload {
   skills: string;
   pricing: string;
   availability: string;

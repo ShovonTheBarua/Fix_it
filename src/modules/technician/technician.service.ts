@@ -1,7 +1,10 @@
 import { prisma } from "../../lib/prisma";
-import type { technicianPayload } from "./technician.interface";
+import type { TechnicianPayload } from "./technician.interface";
 
-const createTechnicianProfileDB = async (payload: technicianPayload, userId: string) => {
+const createTechnicianProfileDB = async (
+  payload: TechnicianPayload,
+  userId: string,
+) => {
   const { skills, pricing, availability, experience } = payload;
 
   const isTechnicianExist = await prisma.user.findUniqueOrThrow({
@@ -18,9 +21,30 @@ const createTechnicianProfileDB = async (payload: technicianPayload, userId: str
     },
   });
 
-  return technician
+  return technician;
+};
+
+const updateTechnicianProfileDB = async (
+  payload: TechnicianPayload,
+  userId: string,
+) => {
+  const { skills, pricing, availability, experience } = payload;
+  console.log(userId, payload);
+
+  const result = await prisma.technicianProfile.update({
+    where: { userId },
+    data: {
+      skills,
+      pricing,
+      availability,
+      experience,
+    },
+  });
+
+  return result;
 };
 
 export const technicianService = {
   createTechnicianProfileDB,
+  updateTechnicianProfileDB,
 };

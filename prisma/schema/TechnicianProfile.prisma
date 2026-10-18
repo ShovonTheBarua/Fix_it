@@ -11,6 +11,7 @@ model TechnicianProfile{
     user User @relation(fields: [userId], references: [id])
     services Service[]
     bookings Booking[]
+    availabilities TechnicianAvailability[]
  
     @@map("technician_Profiles")
 }
