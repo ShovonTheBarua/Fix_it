@@ -2,8 +2,8 @@ model Category{
     id String @id @default(uuid())
     name String @unique 
     description String @db.VarChar(255)
-    createdAt DateTime
-    updatedAt DateTime
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
     service Service[]
 
