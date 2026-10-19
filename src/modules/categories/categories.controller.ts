@@ -1,8 +1,9 @@
 import type { NextFunction, Request, Response } from "express";
-import { catchAsync } from "../utils/catchAsync";
+import { catchAsync } from "../../utils/catchAsync";
 import { categoriesService } from "./categories.service";
-import { sendResponse } from "../utils/sendResponse";
+import { sendResponse } from "../../utils/sendResponse";
 import httpStatus from "http-status";
+
 const createCategories = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const payload = req.body;
@@ -18,6 +19,20 @@ const createCategories = catchAsync(
   },
 );
 
+const getAllCategories = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const result = await categoriesService.getAllCategoriesDB();
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "All category retrieved successfully",
+      data: result,
+    });
+  },
+);
+
 export const categoriesController = {
   createCategories,
+  getAllCategories,
 };

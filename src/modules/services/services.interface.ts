@@ -1,6 +1,6 @@
 export interface services {
-  name: string;
-  technicianId: string;
+  title: string;
+  categoryId: string;
   description: string;
   price: number;
 }

@@ -1,10 +1,10 @@
 import type { NextFunction, Request, Response } from "express";
-import type { Role } from "../../../generated/prisma/enums";
+import type { Role } from "../../generated/prisma/enums";
 import { catchAsync } from "../utils/catchAsync";
 import { jwtUtils } from "../utils/jwt";
-import config from "../../config";
+import config from "../config";
 import type { JwtPayload } from "jsonwebtoken";
-import { prisma } from "../../lib/prisma";
+import { prisma } from "../lib/prisma";
 
 export const auth = (...requiredRoles: Role[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {

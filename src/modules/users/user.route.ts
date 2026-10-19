@@ -6,7 +6,7 @@ import {
 } from "express";
 import { userController } from "./user.controller";
 import { Role } from "../../../generated/prisma/enums";
-import { auth } from "../middleware/auth";
+import { auth } from "../../middleware/auth";
 
 const router = Router();
 
@@ -23,14 +23,12 @@ declare global {
   }
 }
 
-
 router.post("/register", userController.registerUser);
-
 
 router.get(
   "/me",
   auth(Role.ADMIN, Role.CUSTOMER, Role.TECHNICIAN),
-  userController.getMyProfile
+  userController.getMyProfile,
 );
 
 export const userRouter = router;

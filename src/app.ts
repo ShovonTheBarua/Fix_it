@@ -10,6 +10,7 @@ import { authRoutes } from "./modules/auth/auth.route";
 import { technicianRouter } from "./modules/technician/technician.route";
 import { servicesRouter } from "./modules/services/services.route";
 import { categoriesRouter } from "./modules/categories/categories.route";
+import { bookingRouter } from "./modules/bookings/bookings.route";
 
 const app: Application = express();
 
@@ -34,6 +35,7 @@ app.use("/api/users", userRouter);
 app.use("/api/auth", authRoutes);
 app.use("/api/technician", technicianRouter);
 app.use("/api/services", servicesRouter);
+app.use("/api/bookings", bookingRouter);
 
 app.use("/api/admin/categories", categoriesRouter);
 

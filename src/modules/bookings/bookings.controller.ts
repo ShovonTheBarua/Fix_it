@@ -1,0 +1,25 @@
+import type { NextFunction, Request, Response } from "express";
+import { catchAsync } from "../../utils/catchAsync";
+import { bookingService } from "./booking.service";
+import { sendResponse } from "../../utils/sendResponse";
+import httpStatus from "http-status";
+
+const createBooking = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const result = await bookingService.createBookingDB(
+      req.body,
+      req.user?.id as string,
+    );
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.CREATED,
+      message: "booking created successfully",
+      data: result,
+    });
+  },
+);
+
+export const bookingController = {
+  createBooking,
+};

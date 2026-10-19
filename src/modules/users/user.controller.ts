@@ -4,11 +4,11 @@ import bcrypt from "bcryptjs";
 import config from "../../config";
 import httpStatus from "http-status";
 import { userService } from "./user.service";
-import { catchAsync } from "../utils/catchAsync";
-import { sendResponse } from "../utils/sendResponse";
+import { catchAsync } from "../../utils/catchAsync";
+import { sendResponse } from "../../utils/sendResponse";
 import jwt from "jsonwebtoken";
 import { CLIENT_RENEG_WINDOW } from "node:tls";
-import { jwtUtils } from "../utils/jwt";
+import { jwtUtils } from "../../utils/jwt";
 import { stdin } from "node:process";
 
 // const createUser = async (req: Request, res: Response) => {
