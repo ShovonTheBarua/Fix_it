@@ -10,4 +10,10 @@ router.post(
   auth(Role.ADMIN, Role.CUSTOMER),
   bookingController.createBooking,
 );
+
+router.get(
+  "/",
+  auth(Role.ADMIN, Role.CUSTOMER),
+  bookingController.getAllBookings,
+);
 export const bookingRouter = router;

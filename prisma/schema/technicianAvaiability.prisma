@@ -11,5 +11,6 @@ model TechnicianAvailability{
     technicianId String
     technician TechnicianProfile @relation(fields: [technicianId], references: [id], onDelete: Cascade)
 
+    booking Booking?
     @@map("technician_availability")
 }

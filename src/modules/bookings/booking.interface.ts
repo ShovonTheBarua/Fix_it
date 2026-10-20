@@ -1,6 +1,5 @@
 export interface bookingPayload {
-   description: string;
-   serviceId: string;
+  description: string;
+  availabilityId: string;
+  serviceId: string;
 }
-
- 
