@@ -30,6 +30,12 @@ const createBookingDB = async (payload: bookingPayload, userId: string) => {
 
     const technicianId = service?.technicianId;
 
+    if (technicianId != slot.technicianId) {
+      throw new Error(
+        "Invalid slot. Try to chose slot that belongs to technician",
+      );
+    }
+
     const booking = await tx.booking.create({
       data: {
         userId,
@@ -56,7 +62,31 @@ const getAllBookingsDB = async (userId: string) => {
   return result;
 };
 
+const getBookingsDetailsByIdDB = async (bookingId: string, userId: string) => {
+  const bookingDetails = await prisma.booking.findFirst({
+    where: { id: bookingId },
+  });
+
+  if (!bookingDetails) {
+    throw new Error("Booking not found");
+  }
+
+  if (userId !== bookingDetails.userId) {
+    throw new Error("Invalid booking access ");
+  }
+
+  return bookingDetails;
+};
+
+const getAllBookingsByAdmin = async () => {
+  const bookings = await prisma.booking.findMany();
+
+  return bookings;
+};
+
 export const bookingService = {
   createBookingDB,
   getAllBookingsDB,
+  getBookingsDetailsByIdDB,
+  getAllBookingsByAdmin,
 };

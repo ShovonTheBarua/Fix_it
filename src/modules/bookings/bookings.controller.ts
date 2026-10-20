@@ -35,7 +35,40 @@ const getAllBookings = catchAsync(
   },
 );
 
+const getBookingsDetailsById = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const params = req.params.Id;
+
+    const result = await bookingService.getBookingsDetailsByIdDB(
+      params as string,
+      req.user?.id as string,
+    );
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "booking details retrieved successfully",
+      data: result,
+    });
+  },
+);
+
+const getAllBookingsByAdmin = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const result = await bookingService.getAllBookingsByAdmin();
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "all booking retrieved successfully",
+      data: result,
+    });
+  },
+);
+
 export const bookingController = {
   getAllBookings,
   createBooking,
+  getBookingsDetailsById,
+  getAllBookingsByAdmin
 };

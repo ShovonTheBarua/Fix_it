@@ -16,4 +16,16 @@ router.get(
   auth(Role.ADMIN, Role.CUSTOMER),
   bookingController.getAllBookings,
 );
+
+ 
+
+router.get(
+  "/:Id",
+  auth(Role.ADMIN, Role.CUSTOMER),
+  bookingController.getBookingsDetailsById,
+);
+
+
+
+
 export const bookingRouter = router;
