@@ -14,6 +14,7 @@ import { adminRouter } from "./modules/admin/admin.route";
 import { notFound } from "./middleware/notFound";
 import httpStatus from "http-status";
 import { globalErrorHandler } from "./middleware/globalErrorHandler";
+import { paymentRoutes } from "./modules/payment/payment.route";
 
 const app: Application = express();
 
@@ -42,6 +43,7 @@ app.use("/api/bookings", bookingRouter);
 
 app.use("/api/admin/categories", categoriesRouter);
 app.use("/api/admin", adminRouter);
+app.use("/api/payment", paymentRoutes);
 
 // error handling function
 app.use(globalErrorHandler);
