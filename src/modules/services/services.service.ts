@@ -12,7 +12,7 @@ const createServices = async (payload: services, userId: string) => {
       technicianId: technician.id,
     },
   });
-
+  
   return service;
 };
 

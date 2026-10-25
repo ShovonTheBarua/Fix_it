@@ -76,9 +76,40 @@ const updateAvailabilitySlot = catchAsync(
   },
 );
 
+const updateBookingStatus = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const id = req.params?.id as string;
+    const result = await technicianService.updateBookingStatusDB(id);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "booking status updated",
+      data: result,
+    });
+  },
+);
+
+const getAllTechnicianBookings = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const result = await technicianService.getAllTechnicianBookingsDB(
+      req.user?.id as string,
+    );
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "all technician bookings retrieved",
+      data: result,
+    });
+  },
+);
+
 export const technicianController = {
   createTechnicianProfile,
   updateTechnicianProfile,
   createAvailabilitySlot,
   updateAvailabilitySlot,
+  updateBookingStatus,
+  getAllTechnicianBookings,
 };

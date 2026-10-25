@@ -15,6 +15,7 @@ import { notFound } from "./middleware/notFound";
 import httpStatus from "http-status";
 import { globalErrorHandler } from "./middleware/globalErrorHandler";
 import { paymentRoutes } from "./modules/payment/payment.route";
+import { reviewRouter } from "./modules/review/review.route";
 
 const app: Application = express();
 
@@ -46,6 +47,7 @@ app.use("/api/bookings", bookingRouter);
 app.use("/api/admin/categories", categoriesRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/payment", paymentRoutes);
+app.use("/api/reviews", reviewRouter )
 
 // error handling function
 app.use(globalErrorHandler);

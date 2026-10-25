@@ -44,7 +44,7 @@ const createCheckoutSession = async (bookingId: string) => {
     });
 
     const payment = await tx.payment.upsert({
-      where: { transactionId: session.id },
+      where: { bookingId: booking.id },
       create: {
         bookingId,
         transactionId: session.id,
@@ -104,7 +104,7 @@ const handleWebhook = async (payload: Buffer, signature: string) => {
 
     // failed
     case "checkout.session.expired":
-      await prisma.payment.update({
+      await prisma.payment.updateMany({
         where: {
           transactionId: event.data.object.id,
           status: "PENDING",
@@ -113,6 +113,7 @@ const handleWebhook = async (payload: Buffer, signature: string) => {
           status: "FAILED",
         },
       });
+      break;
 
     // ... handle other event types
     default:
@@ -120,7 +121,26 @@ const handleWebhook = async (payload: Buffer, signature: string) => {
   }
 };
 
+const getAllPaymentsDB = async (userId: string) => {
+  const result = await prisma.payment.findMany({
+    where: { booking: { userId } },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+  return result;
+};
+
+const getPaymentByIdDB = async (id: string) => {
+  const result = await prisma.payment.findUniqueOrThrow({
+    where: { id },
+  });
+  return result;
+};
+
 export const paymentServices = {
   createCheckoutSession,
   handleWebhook,
+  getAllPaymentsDB,
+  getPaymentByIdDB,
 };

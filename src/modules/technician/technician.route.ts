@@ -28,4 +28,16 @@ router.put(
   technicianController.updateAvailabilitySlot,
 );
 
+router.patch(
+  "/bookings/:id",
+  auth(Role.ADMIN, Role.TECHNICIAN),
+  technicianController.updateBookingStatus,
+);
+
+router.get(
+  "/bookings",
+  auth(Role.ADMIN, Role.TECHNICIAN),
+  technicianController.getAllTechnicianBookings,
+);
+
 export const technicianRouter = router;

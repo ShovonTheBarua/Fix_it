@@ -102,9 +102,40 @@ const updateAvailabilitySlot = async (
   return result;
 };
 
+const updateBookingStatusDB = async (id: string) => {
+  const result = await prisma.booking.update({
+    where: { id },
+    data: {
+      status: "ACCEPTED",
+    },
+  });
+  return result;
+};
+
+const getAllTechnicianBookingsDB = async (userId: string) => {
+  const technician = await prisma.technicianProfile.findUnique({
+    where: { userId },
+  });
+
+  if (!technician) {
+    throw new Error(
+      "technician profile doesn't exits. Create a technician profile first",
+    );
+  }
+  const technicianId = technician.id;
+
+  const result = await prisma.booking.findMany({
+    where: { technicianId },
+  });
+
+  return result;
+};
+
 export const technicianService = {
   createTechnicianProfileDB,
   updateTechnicianProfileDB,
   createAvailabilitySlotDB,
   updateAvailabilitySlot,
+  updateBookingStatusDB,
+  getAllTechnicianBookingsDB,
 };
