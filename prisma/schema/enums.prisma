@@ -13,6 +13,10 @@ enum BookingStatus {
     REQUESTED
     ACCEPTED
     DECLINED
+    PAID
+    IN_PROGRESS
+    COMPLETED
+    CANCELLED
 }
 
 enum PaymentMethod {

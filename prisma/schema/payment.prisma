@@ -1,6 +1,7 @@
 model Payment{
     id String @id @default(uuid())
     transactionId String @unique
+    // payment intent id
     amount Decimal
     method PaymentMethod  @default(Stripe)
     status PaymentStatus  @default(PENDING)
