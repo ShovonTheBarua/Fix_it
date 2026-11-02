@@ -105,6 +105,36 @@ const getAllTechnicianBookings = catchAsync(
   },
 );
 
+const getAllTechnician = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const query = req.query;
+    const result = await technicianService.getAllTechnicianDB(query);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "all technician retrieved",
+      data: result,
+    });
+  },
+);
+
+const getTechnicianReviews = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const result = await technicianService.getTechnicianReviewsDB(
+      req.params.id as string,
+    );
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "all technician review has  retrieved",
+      data: result,
+    });
+  },
+);
+
+
 export const technicianController = {
   createTechnicianProfile,
   updateTechnicianProfile,
@@ -112,4 +142,6 @@ export const technicianController = {
   updateAvailabilitySlot,
   updateBookingStatus,
   getAllTechnicianBookings,
+  getAllTechnician,
+  getTechnicianReviews,
 };

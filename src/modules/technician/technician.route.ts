@@ -5,6 +5,10 @@ import { Role } from "../../../generated/prisma/enums";
 
 const router = Router();
 
+// public
+router.get("/", technicianController.getAllTechnician);
+router.get("/:id", technicianController.getTechnicianReviews);
+
 router.post(
   "/profile",
   auth(Role.ADMIN, Role.TECHNICIAN),

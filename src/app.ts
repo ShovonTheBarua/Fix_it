@@ -47,7 +47,7 @@ app.use("/api/bookings", bookingRouter);
 app.use("/api/admin/categories", categoriesRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/payment", paymentRoutes);
-app.use("/api/reviews", reviewRouter )
+app.use("/api/reviews", reviewRouter);
 
 // error handling function
 app.use(globalErrorHandler);

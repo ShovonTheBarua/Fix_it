@@ -1,3 +1,4 @@
+import type { Prisma } from "../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
 import type { Slot, TechnicianPayload } from "./technician.interface";
 
@@ -131,6 +132,56 @@ const getAllTechnicianBookingsDB = async (userId: string) => {
   return result;
 };
 
+interface technicianQuery {
+  experience?: string;
+  skills?: string[];
+  pricing?: string;
+}
+
+// public
+const getAllTechnicianDB = async (query: technicianQuery) => {
+  const { experience, skills, pricing } = query;
+  const condition: Prisma.TechnicianProfileWhereInput = {};
+
+  if (experience) {
+    condition.experience = {
+      gte: Number(experience),
+    };
+  }
+
+  if (skills) {
+    condition.skills = {
+      array_contains: skills,
+    };
+  }
+
+  if (pricing) {
+    condition.pricing = pricing;
+  }
+
+  const allTechnicians = await prisma.technicianProfile.findMany({
+    where: condition,
+  });
+
+  return allTechnicians;
+};
+
+const getTechnicianReviewsDB = async (id: string) => {
+  const result = await prisma.technicianProfile.findUniqueOrThrow({
+    where: { id },
+    include: {
+      services: {
+        include: {
+          reviews: true,
+        },
+      },
+    },
+
+  });
+
+  return result;
+};
+
 export const technicianService = {
   createTechnicianProfileDB,
   updateTechnicianProfileDB,
@@ -138,4 +189,6 @@ export const technicianService = {
   updateAvailabilitySlot,
   updateBookingStatusDB,
   getAllTechnicianBookingsDB,
+  getAllTechnicianDB,
+  getTechnicianReviewsDB,
 };
