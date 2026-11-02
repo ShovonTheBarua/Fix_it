@@ -32,11 +32,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// app.get("/", async (req: Request, res: Response) => {
-//   const user = await prisma.user.findMany();
-//   console.log(user);
-//   res.send("Hello, world");
-// });
+app.get("/", async (req: Request, res: Response) => {
+  const user = await prisma.user.findMany();
+  console.log(user);
+  res.send("Hello, world");
+});
 
 app.use("/api/users", userRouter);
 app.use("/api/auth", authRoutes);
